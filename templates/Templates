@@ -1,0 +1,102 @@
+§ =============================================================
+§  Interface Version
+§
+§  enable advanced features
+§ =============================================================
+
+InterfaceVersion ( '1.0' )
+
+§ ==========================================================
+§  Settings
+§ ==========================================================
+
+SetMacro( 'AUTHOR',       'YOUR NAME' )
+SetMacro( 'AUTHORREF',    '' )
+SetMacro( 'EMAIL',        '' )
+SetMacro( 'ORGANIZATION', '' )
+SetMacro( 'COMPANY',      '' )
+SetMacro( 'COPYRIGHT',    'Copyright (c) |YEAR|, |AUTHOR|' )
+SetMacro( 'LICENSE',      'GNU General Public License' )
+
+SetFormat( 'DATE', '%x' )
+SetFormat( 'TIME', '%X' )
+SetFormat( 'YEAR', '%Y' )
+
+SetStyle( 'default' )
+
+§ used by the template "Comments.file description pl":
+SetMacro( 'PERL_INTERPRETER', '/usr/bin/env perl' )
+
+§ templates automatically included into new files
+§ set the property to an empty string to disable the insertion
+SetProperty ( 'Perl::FileSkeleton::Script', 'Comments.shebang;Comments.file description pl; ;Skeleton.script-use' )
+SetProperty ( 'Perl::FileSkeleton::Module', 'Comments.file description pm; ;Skeleton.module-use' )
+SetProperty ( 'Perl::FileSkeleton::Test',   'Comments.file description t; ;Skeleton.test-use' )
+SetProperty ( 'Perl::FileSkeleton::POD',    '' )
+
+§ ==========================================================
+§  File Includes and Shortcuts
+§ ==========================================================
+
+MenuShortcut( 'Comments',   'c' )
+MenuShortcut( 'Idioms',     'i' )
+MenuShortcut( 'Pod',        'd' )
+MenuShortcut( 'Statements', 's' )
+MenuShortcut( 'Special Variables', 'v' )
+MenuShortcut( 'Regex', 'r' )
+MenuShortcut( 'Snippets', 'n' )
+MenuShortcut( 'File-Test', 'f' )
+MenuShortcut( 'Help', 'h' )
+
+IncludeFile( 'comments.templates' )
+IncludeFile( 'statements.templates' )
+IncludeFile( 'idioms.templates' )
+IncludeFile( 'specvar.templates' )
+IncludeFile( 'regex.templates' )
+IncludeFile( 'pod.templates' )
+IncludeFile( 'snippets.templates' )
+IncludeFile( 'filetests.templates' )
+
+§ =============================================================
+§  Inserted when creating a new script.
+§  See configuration variable 'g:Perl_InsertFileHeader'
+§  and template properties:
+§  - Perl::FileSkeleton::Script
+§  - Perl::FileSkeleton::Module
+§  - Perl::FileSkeleton::Test
+§  - Perl::FileSkeleton::POD
+§
+§  - option 'nomenu': this will not create a menu entry
+§ =============================================================
+
+== Skeleton.script-use == nomenu, below ==
+use strict;
+use warnings;
+use utf8;
+== Skeleton.module-use == nomenu, below ==
+use strict;
+use warnings;
+== Skeleton.test-use == nomenu, below ==
+use strict;
+use warnings;
+
+use Test::More tests => 1;                      # last test to print
+== ENDTEMPLATE ==
+
+§ =============================================================
+§  Help
+§
+§  help English:
+§  - pick up the word under the cursor
+§  - delete non-word characters before calling the help
+§  - the word is always included in the URL in lowercase,
+§    which seems to work better
+§ =============================================================
+
+SetMacro( 'HelpPathEnglish', 'http://en.wiktionary.org/wiki/' )
+
+== HELP: Help.English == map:he, sc:e ==
+|Word( '' )|
+|Substitute( '\W', '', 'g' )|
+|Browser( '|HelpPathEnglish||PICK:l|' )|
+== ENDTEMPLATE ==
